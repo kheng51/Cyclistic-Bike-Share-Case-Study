@@ -1,0 +1,281 @@
+---
+title: "R Notebook"
+output:
+  pdf_document: default
+  html_notebook: default
+---
+
+# Installing Libraries
+
+```{r}
+library(tidyverse)
+library(lubridate)
+library(ggplot2)
+library(readxl)
+```
+
+
+# Loading in Data for Each Month
+
+```{r warning=FALSE}
+jan_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic01-22/202201-divvy-tripdata.xls")
+
+feb_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic02-22/202202-divvy-tripdata.xls")
+
+mar_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic03-22/202203-divvy-tripdata.xls")
+
+apr_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic04-22/202204-divvy-tripdata.xls")
+
+may_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic05-22/202205-divvy-tripdata.xls")
+
+jun_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic06-22/202206-divvy-tripdata.xls")
+
+jul_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic07-22/202207-divvy-tripdata.xls")
+
+aug_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic08-22/202208-divvy-tripdata.xls")
+
+sep_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic09-22/202209-divvy-publictripdata.xls")
+
+oct_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic10-22/202210-divvy-tripdata.xls")
+
+nov_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic11-22/202211-divvy-tripdata.xls")
+
+dec_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/cyclistic12-22/202212-divvy-tripdata.xls")
+```
+
+# Check Structure of Each Month's Data to Ensure Consistencies
+```{r}
+str(jan_data)
+
+str(feb_data)
+
+str(mar_data)
+
+str(apr_data)
+
+str(may_data)
+
+str(jun_data)
+
+str(jul_data)
+
+str(aug_data)
+
+str(sep_data)
+
+str(oct_data)
+
+str(nov_data)
+
+str(dec_data)
+```
+
+
+# Convert all non-numerical columns to character 
+```{r}
+jan_data <-  mutate(jan_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+feb_data <-  mutate(feb_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+mar_data <-  mutate(mar_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id))  
+
+apr_data <-  mutate(apr_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+may_data <-  mutate(may_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+jun_data <-  mutate(jun_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+jul_data <-  mutate(jul_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+aug_data <-  mutate(aug_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+sep_data <-  mutate(sep_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+oct_data <-  mutate(oct_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+nov_data <-  mutate(nov_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+
+dec_data <-  mutate(dec_data, ride_id = as.character(ride_id)
+                   ,rideable_type = as.character(rideable_type)
+                   ,start_station_id = as.character(start_station_id)
+                   ,end_station_id = as.character(end_station_id)) 
+```
+
+# Merge Datasets
+
+```{r}
+year2022_data <- bind_rows(jan_data, 
+                       feb_data, 
+                       mar_data, 
+                       apr_data, 
+                       may_data, 
+                       jun_data, 
+                       jul_data, 
+                       aug_data, 
+                       sep_data, 
+                       oct_data, 
+                       nov_data, 
+                       dec_data
+                       )
+```
+
+# Inspecting Full Year Data
+
+```{r}
+str(year2022_data)
+summary(year2022_data)
+```
+
+# Verifying that there are two unique values for member_casual 
+
+```{r}
+unique(year2022_data$member_casual)
+```
+
+
+
+
+
+# Creating columns for day, month, and year for aggregation purposes
+
+```{r}
+year2022_data$date <- as.Date(year2022_data$started_at)
+year2022_data$month <- format(as.Date(year2022_data$date), "%m")
+year2022_data$day <- format(as.Date(year2022_data$date), "%d")
+year2022_data$year <- format(as.Date(year2022_data$date), "%Y")
+```
+
+# Creating new ride_length column that shows seconds
+
+```{r}
+year2022_data$ride_length <- difftime(year2022_data$ended_at,year2022_data$started_at)
+```
+
+# Inspecting structure of updated data
+
+```{r}
+str(year2022_data)
+```
+
+# Converting ride_length to numerical for easier calculations
+
+```{r}
+year2022_data$ride_length <- as.numeric(as.character(year2022_data$ride_length))
+```
+
+# Removing observations with incomplete data
+
+```{r}
+originalrows <- nrow(year2022_data)
+year2022_data <- na.omit(year2022_data)
+originalrows - nrow(year2022_data)
+```
+## 47480 rows with missing data were removed
+
+# Descriptive Analysis
+
+## Calculate Summary Statistics of Ride Length
+```{r}
+summary(year2022_data$ride_length)
+```
+
+## Subtract Observations with Negative Trip Length
+
+```{r}
+year2022_data <- year2022_data[!(year2022_data$ride_length < 0),]
+```
+
+## New Summary Statistics
+
+```{r}
+summary(year2022_data$ride_length)
+```
+
+## Comparing Members vs. Casual Riders
+
+```{r}
+aggregate(year2022_data$ride_length ~ year2022_data$member_casual, FUN = mean)
+aggregate(year2022_data$ride_length ~ year2022_data$member_casual, FUN = median)
+aggregate(year2022_data$ride_length ~ year2022_data$member_casual, FUN = max)
+aggregate(year2022_data$ride_length ~ year2022_data$member_casual, FUN = min)
+```
+
+## Average Ride Time by Day of Week for Members vs. Casual Riders
+```{r}
+aggregate(year2022_data$ride_length ~ year2022_data$member_casual + year2022_data$day_of_week, FUN = mean)
+```
+
+## Average Ride Time by Month for Members vs. Casual Riders
+
+```{r}
+aggregate(year2022_data$ride_length ~ year2022_data$member_casual + year2022_data$month, FUN = mean)
+```
+
+## Visualization of Number of Rides by Rider Type
+
+```{r}
+year2022_data %>% 
+  mutate(weekday = wday(started_at, label = TRUE)) %>% 
+  group_by(member_casual, weekday) %>% 
+  summarise(number_of_rides = n()
+            ,average_duration = mean(ride_length)) %>% 
+  arrange(member_casual, weekday)  %>% 
+  ggplot(aes(x = weekday, y = number_of_rides, fill = member_casual)) +
+  geom_col(position = "dodge")
+
+```
+
+## Visualization for Average Duration
+
+```{r}
+year2022_data %>% 
+  mutate(weekday = wday(started_at, label = TRUE)) %>% 
+  group_by(member_casual, weekday) %>% 
+  summarise(number_of_rides = n()
+            ,average_duration = mean(ride_length)) %>% 
+  arrange(member_casual, weekday)  %>% 
+  ggplot(aes(x = weekday, y = average_duration, fill = member_casual)) +
+  geom_col(position = "dodge")
+
+```
+
+# Exporting CSV File to Further Analyze Average Ride Length
+
+```{r}
+counts <- aggregate(year2022_data$ride_length ~ year2022_data$member_casual + year2022_data$day_of_week, FUN = mean)
+
+write.csv(counts, file = 'C:/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/avg_ride_length.csv')
+```
