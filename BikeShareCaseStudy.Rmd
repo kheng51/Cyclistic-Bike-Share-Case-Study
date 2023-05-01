@@ -45,30 +45,34 @@ dec_data <- read_excel("/Users/kheng/OneDrive/Documents/Google Career Certificat
 
 # Check Structure of Each Month's Data to Ensure Consistencies
 ```{r}
+print("JAN")
 str(jan_data)
-
+print("FEB")
 str(feb_data)
-
+print("MAR")
 str(mar_data)
-
+print("APR")
 str(apr_data)
-
+print("MAY")
 str(may_data)
-
+print("JUN")
 str(jun_data)
-
+print("JUL")
 str(jul_data)
-
+print("AUG")
 str(aug_data)
-
+print("SEP")
 str(sep_data)
-
+print("OCT")
 str(oct_data)
-
+print("NOV")
 str(nov_data)
-
+print("DEC")
 str(dec_data)
 ```
+
+## Upon closer inspection, we can see that much of the station data for the months of August and September is missing. Since the data is not missing at random, I will not remove rows with missing observations.
+
 
 
 # Convert all non-numerical columns to character 
@@ -196,14 +200,6 @@ str(year2022_data)
 year2022_data$ride_length <- as.numeric(as.character(year2022_data$ride_length))
 ```
 
-# Removing observations with incomplete data
-
-```{r}
-originalrows <- nrow(year2022_data)
-year2022_data <- na.omit(year2022_data)
-originalrows - nrow(year2022_data)
-```
-## 47480 rows with missing data were removed
 
 # Descriptive Analysis
 
@@ -272,10 +268,17 @@ year2022_data %>%
 
 ```
 
+# Exporting CSV File for Full 2022 Year Dataset
+
+```{r}
+write.csv(year2022_data, file = 'C:/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/year2022Data.csv')
+```
+
 # Exporting CSV File to Further Analyze Average Ride Length
 
 ```{r}
-counts <- aggregate(year2022_data$ride_length ~ year2022_data$member_casual + year2022_data$day_of_week, FUN = mean)
+counts <- aggregate(year2022_data$ride_length ~ year2022_data$member_casual + year2022_data$day_of_week + year2022_data$month, FUN = mean)
 
 write.csv(counts, file = 'C:/Users/kheng/OneDrive/Documents/Google Career Certificate Case Study/cyclisticData/avg_ride_length.csv')
 ```
+
